@@ -18,7 +18,7 @@ max_port_cur = 15
 portfolio = [dict() for x in range(max_port_cur)]
 # bitcoin momentum constants
 btc_gain_check = 1+ 0.02
-btc_prices_length = 5
+btc_prices_length = 50
 btc_prices = [0] * btc_prices_length
 btc_index = 0
 
@@ -100,14 +100,15 @@ while(1):
 		tmp_msg = my_bittrex.get_ticker(tmp_name)
 		if(tmp_msg['success'] == True):
 			if(debug):
-				print(tmp_name)
-				print(tmp_msg)
+				print(my_bittrex.get_market_history(tmp_name))
 			portfolio[i]['Bid'] = tmp_msg['result']['Bid']
 			portfolio[i]['Ask'] = tmp_msg['result']['Ask']
 			#draft check of calling
 			market_sum = my_bittrex.get_marketsummary(tmp_name)
 			order_book = my_bittrex.get_orderbook(tmp_name)
-			market_history = my_bittrex.get_market_history(tmp_name)
+			# Task 1.2: insert logic here which checks ids that are not in db
+			# and inserts them correctly
+			portfolio[i]['transactions'] = my_bittrex.get_market_history(tmp_name)
 		
 
 #buy-order example
